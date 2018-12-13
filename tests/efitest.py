@@ -27,11 +27,18 @@ def expect_busybox(self):
 def expect_prompt(self):
 	self.expect('# ')
 
+def expect_uboot(self):
+	self.expect('Hit any key to stop autoboot:')
+	self.sendline('')
+
+	self.expect('=> ')
+
 def bind_methods(c):
 	# TODO: Can we use introspection to find methods to bind?
 	c.expect_boot = MethodType(expect_boot, c)
 	c.expect_busybox = MethodType(expect_busybox, c)
 	c.expect_prompt = MethodType(expect_prompt, c)
+	c.expect_uboot = MethodType(expect_uboot, c)
 
 class ConsoleWrapper(object):
 	def __init__(self, console):
